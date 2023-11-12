@@ -1,15 +1,14 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-  echo "[使用法] jtdx_setup.sh [ユーザー名] [rootパスワード]" 1>&2
+  echo "[Usage] jtdx_setup.sh [username] [root password(for sudo)]" 1>&2
   exit 1
 fi
 
-echo "ユーザー名:$1"
-echo "rootパスワード:$2"
-read -p "でセットアップします。よろしいですか？(y/N): " yn
-case "$yn" in [yY]*) ;; *) echo "中断しました。" ; exit ;; esac
-
+echo "username: $1"
+echo "root password(for sudo): $2"
+read -p "Continue?(y/N): " yn
+case "$yn" in [yY]*) ;; *) echo "Abort." ; exit ;; esac
 
 # システム更新、ネットツール、デスクトップのインストール
 echo $2 | sudo -S apt -y update
