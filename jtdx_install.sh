@@ -51,15 +51,17 @@ cd src
 mkdir ../build
 cd ../build
 ../src/configure --prefix=$HOME/hamlib-prefix --disable-shared --enable-static --without-cxx-binding --disable-winradio CFLAGS="-g -O2 -fdata-sections -ffunction-sections" LDFLAGS="-Wl,--gc-sections"
+make
+make install-strip
 
 #JTDXのインストール
-mkdir -p /home/gun/jtdx-prefix/build
-cd /home/gun/jtdx-prefix
+mkdir -p /home/$1/jtdx-prefix/build
+cd /home/$1/jtdx-prefix
 git clone https://github.com/jtdx-project/jtdx src
-cd /home/gun/jtdx-prefix/build
+cd /home/$1/jtdx-prefix/build
 echo $2 | sudo -S apt -y install build-essential cmake automake libtool gfortran pkg-config asciidoc asciidoctor qttools5-dev-tools qt5-default qtmultimedia5-dev libqt5serialport5-dev libudev-dev  libfftw3-dev git libhamlib-dev libhamlib-utils portaudio19-dev libqt5multimedia5-plugins coderay dialog libsamplerate0-dev python3-pip python3-tk python-dev-is-python2 python3-numpy python3-setuptools python3-dev subversion texinfo libfreetype6-dev libgtk-3-dev libgtk2.0-dev libjpeg-dev liblcms2-dev libtiff5-dev libwebp-dev tcl8.6-dev tk8.6-dev libusb-dev libusb-1.0-0-dev libgfortran4 libfftw3-3 libboost1.67-all-dev libqt5websockets5-dev
 
-cmake -D CMAKE_PREFIX_PATH=/home/gun/hamlib-prefix -D CMAKE_INSTALL_PREFIX=/home/gun/jtdx-prefix ../src
+cmake -D CMAKE_PREFIX_PATH=/home/$1/hamlib-prefix -D CMAKE_INSTALL_PREFIX=/home/$1/jtdx-prefix ../src
 cmake --build .
 echo $2 | sudo -S cmake --build . --target install
 
