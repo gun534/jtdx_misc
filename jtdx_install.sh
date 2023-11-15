@@ -110,7 +110,7 @@ echo "Categories=Network;WebBrowser;" >> ~/JTDX.desktop
 echo "Icon=/home/$1/Pictures/jtdx.png" >> ~/JTDX.desktop
 echo "Encoding=UTF-8" >> ~/JTDX.desktop
 chmod 775 ~/JTDX.desktop
-echo $2 | sudo -S mv JTDX.desktop /usr/share/applications/
+echo $2 | sudo -S mv ~/JTDX.desktop /usr/share/applications/
 
 echo "Sync and Wait 5sec..."
 sync
