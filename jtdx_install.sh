@@ -16,6 +16,10 @@ echo $2 | sudo -S apt -y upgrade
 echo $2 | sudo -S apt -y install net-tools
 echo $2 | sudo -S apt -y install ubuntu-desktop
 
+echo "Sync and Wait 5sec..."
+sync
+sleep 5
+
 # swap 1GB設定
 echo $2 | sudo -S fallocate -l 1g /swapfile
 echo $2 | sudo -S chmod 600 /swapfile
@@ -23,11 +27,23 @@ echo $2 | sudo -S mkswap /swapfile
 echo '/swapfile swap swap defaults 0 0' | sudo tee -a /etc/fstab
 echo $2 | sudo -S sudo swapon -a
 
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
+
 #必要モジュールのインストール
 echo $2 | sudo -S apt-get -y install build-essential cmake automake libtool gfortran pkg-config asciidoc asciidoctor qttools5-dev qttools5-dev-tools qt5-default qtmultimedia5-dev libqt5serialport5-dev libudev-dev fftw3 libfftw3-dev cmake git libhamlib-dev libhamlib-utils portaudio19-dev libqt5multimedia5-plugins coderay dialog libsamplerate0-dev python3-pip python3-tk python3-dev python3-numpy python3-setuptools python3-dev subversion texinfo libfreetype6-dev libgtk-3-dev libgtk2.0-dev libjpeg-dev liblcms2-dev libtiff5-dev libwebp-dev tcl8.6-dev tk8.6-dev  libusb-dev libusb-1.0-0-dev .imagetk libgfortran4 libgd-dev
 
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
+
 echo $2 | sudo -S apt-get -y install lcl*2.0 lazarus*2.0 fp*3.0.4 fpc*3.0.4 libssl-dev git build-essential libmariadbclient-dev
 echo $2 | sudo -S ln -s /usr/lib/aarch64-linux-gnu/libmariadbclient.so /usr/lib/libmysqlclient.so
+
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
 
 #cqrlogのインストール
 cd ~/Downloads
@@ -36,6 +52,10 @@ tar xvzf v2.5.2.tar.gz
 cd cqrlog-2.5.2
 make
 echo $2 | sudo -S make install
+
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
 
 #mariadbのインストール
 echo $2 | sudo -S sudo apt -y install mariadb-server
@@ -53,6 +73,10 @@ cd ../build
 make
 make install-strip
 
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
+
 #JTDXのインストール
 mkdir -p ~/jtdx-prefix/build
 cd ~/jtdx-prefix
@@ -64,9 +88,14 @@ cmake -D CMAKE_PREFIX_PATH=~/hamlib-prefix -D CMAKE_INSTALL_PREFIX=~/jtdx-prefix
 cmake --build .
 echo $2 | sudo -S cmake --build . --target install
 
+echo "Sync and Wait 3sec..."
+sync
+sleep 3
+
 #JTDX用のアイコンを移動
 #cd ~
 #git clone https://github.com/gun534/jtdx_misc.git
+mkdir ~/Pictures
 cp ~/jtdx_misc/jtdx.png ~/Pictures
 
 #アプリのショートカットを作成
@@ -82,6 +111,12 @@ echo "Icon=/home/$1/Pictures/jtdx.png" >> ~/JTDX.desktop
 echo "Encoding=UTF-8" >> ~/JTDX.desktop
 chmod 775 ~/JTDX.desktop
 echo $2 | sudo -S mv JTDX.desktop /usr/share/applications/
+
+echo "Sync and Wait 5sec..."
+sync
+sleep 5
+
+echo "Process is Completed!!!!!"
 
 #再起動
 echo $2 | sudo -S reboot
